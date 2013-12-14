@@ -33,35 +33,13 @@ function display_form(req, res) {
 function upload_file(req, res) {
 	var form = new formidable.IncomingForm();
 	form.on("fileBegin", function (name, file) {
-		console.log("file begin fired");
-		console.log(name);
 		file.path = "./" + file.name;
-		console.log(file.name);
-		console.log(file.path);
-		console.log("end filebegin");
 	});
 	form.parse(req, function (err, fields, files) {
 		res.writeHead(200, {'content-type':'text/plain'});
 		res.write("Received upload.");
 		res.end(util.inspect({fields:fields, files:files}));
 	});
-
-	/*
-	var fileStream = fs.createWriteStream('Test.java');
-	req.on("data", function(chunk) {
-		fileStream.write(chunk);
-	});
-	req.on("end", function() {
-		console.log("end fired");
-	});
-	res.end();
-	*/
-}
-
-function upload_complete(res) {
-	res.setHeader(200, {"Content-Type": "text/plain"});
-	res.write("Thanks for uploading!");
-	res.end();
 }
 
 function show_404(req, res) {
